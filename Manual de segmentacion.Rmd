@@ -1,0 +1,128 @@
+---
+output: 
+  pdf_document:
+    keep_tex: true
+    fig_caption: yes
+    latex_engine: pdflatex
+    template: ~/Documentos/Manuales/svm-latex-ms.tex
+title: "Como extraer una region de interes en un canal mediante segmentacion en otro canal guia"
+thanks: "Replication files are available on the author's Github account (http://github.com/danielprieto). **Current version**:2.1; **Correspondence**: marielrosasaidaa@gmail.com, dprieto@fcien.edu.uy. This document has been written in Rmarkdown using the template designed by Steven Miller available at https://github.com/svmiller/svm-r-markdown-templates"
+author:
+  - name: Mariel Rosas
+  - name: Daniel Prieto
+    affiliation: \newline Depto. de Biologia del Neurodesarrollo, Instituto de Investigaciones Biologicas Clemente Estable, Montevideo, Uruguay.
+abstract: "Este documento provee un metodo para obtener datos de un canal, segmentando una estructura anatomica en otro, a partir de datos multidimensionales de microscopia confocal. Para ello realizamos una segmentacion semiautomatica con TrakEM2."
+keywords: "confocal, microscopia, TrakEM2, segmentacion"
+geometry: margin=1in
+fontsize: 11pt
+bibliography: references.bib
+biblio-style: apsr
+endnote: no
+
+# spacing: double
+---
+# Introduccion
+A menudo debemos extraer informacion de una estructura que podemos reconocer anatomicamente con un marcador, pero el dato que queremos extraer se encuentra en otro canal, donde no podemos delimitar estructuras (Fig. 1). El problema es sencillo cuando se trabaja con un unico plano, pero cuando se trabaja con múltiples planos y canales el procesamiento manual se vuelve inviable. Dentro de la aplicación de FIJI[@Schindelin2012] dado que en la sección de TrakEM2[@Cardona2012] para trabajar con imágenes de varios canales hay seguir una serie de pasos para poder separar una región interés pero seleccionando un área de otra imagen, se hizo este material de apoyo para poder realizarlo. En este caso utilizamos un grupo de imágenes apiladas (diferentes planos en el eje z) tomadas en un microscopio laser confocal. 
+Los preparados fueron marcados con Faloidina conjugada a un fluorocromo para segmentar una región determinada de interes, y luego recuperar la misma region en un segundo (aunque pueden ser mas) canal. El segundo canal, en nuestro caso, esta marcado con anticuerpos anti-histona H3 fosforilada, corresponde a celulas proliferantes.
+
+\begin{figure}[h]
+ \centering
+      \includegraphics[width=0.7\textwidth]{img/PRIMERAS.png}
+      \caption{A. Canal utilizado para segmentar. B. Canal de interes. C. volumen segmentado resultante en el canal de interes.}
+      \label{fig}
+    \end{figure}
+\newpage
+
+# Metodo  
+
+Si tenemos archivos con stacks multicanal, conviene separar los canales y guardarlos por separado. Sugerimos utilizar el formato OME-TIFF, y una nomenclatura conveniente. 
+
+1. Para elegir las (2) pilas de imágenes a segmentar: **File>Open>archivo en OME-TIFF**.
+2. Para entrar a TrakEM2: **File>New>TrakEM2**, aquí aparecerá un cuadro para elegir donde guardar el archivo.
+3. Ya dentro de dicha sección se hará CLICK DER sobre la imagen negra: **>Import >Stack**, se elegirá el canal que se quiera usar como guía de selección en el cuadro emergente (Fig.2) presionando: **Ok > Ok> Yes**.  
+
+\begin{figure}[h]
+      \includegraphics[width=1\textwidth]{img/2AGRANDADA.jpg}
+      \caption{Esta imagen necesita un pie de figura}
+      \label{fig}
+    \end{figure}
+\newpage
+4. Seleccionar en Anything CLICK DER **>Add new chid> Area_list**, sobre la ventana de Project Objects **>New anything> New area_list**.  
+\begin{figure}[h]
+ \centering
+      \includegraphics[width=0.8\textwidth]{img/4AGRANDADA.jpg}
+      \caption{Las flechas celestes muestran el cuadro emergente de TrakEM, con las ventana de Anything (izq) y la de Proyect Objects (der)}
+      \label{fig}
+    \end{figure}
+5. Se volverá a la pantalla inicial y se importará el canal (o canales) de interes, con CLICK DER **>Import >Stack**, siempre en el Patches, aparecerá un cuadro emergente (Fig.3) para elegir dicho canal, presionar: **OK> OK> YES**.  
+\begin{figure}[h]
+ \centering
+      \includegraphics[width=0.6\textwidth]{img/5.jpg}
+      \caption{Se debe estar posicionado en Patches y en el primer canal de la imagen de guía}
+      \label{fig}
+    \end{figure}
+\newpage
+6. Para alinear la imagen nueva con la imagen anterior, nos posicionamos en Patches CLICK DER**>Properties** y en el cuadro emergente (Fig.4) se posicionará la imagen en **>x=0 , y=0**.  
+En Patches tiene que quedar en la posición 1 en todas las capas la imagen que se usará como guía. Nos posicionamos sobre ésta y con CLICK DER **Move > Move to top**, se recorrerá todas las capas.  
+\begin{figure}[h]
+ \centering
+      \includegraphics[width=0.8\textwidth]{img/6AGRANDADA.png}
+      \caption{Las flechas azules muestran valores de x e y}
+      \label{fig}
+    \end{figure}
+7. Se procederá a hacer la segmentación del área que se quiera utilizar como guía para hacer la interpolación en algunas de las capas. Siempre se tendrá que estar posicionado con el area_list seleccionada, y con el pincel del panel de herramientas superior activado, con MAYUS+CLICK IZQ se rellenará el área seleccionada, con ALT+CLICK IZQ se borrará la selección.  
+\begin{figure}[h]
+  \centering
+      \includegraphics[width=0.5\textwidth]{img/}
+      \caption{La flecha verde muestra el picel que se deberá tener seleccionado para comenzar la segmentacion, la flecha celeste muestra el area de segmentacion en la imagen guia y la flecha roja muestra que se debe estar con el area_list seleccionada}
+      \label{fig}
+    \end{figure}
+8. Con CLICK DER sobre la pantalla se seleccionará **Area >Interpolate all gaps**.  
+9. Para recortar el área seleccionada en base a la selección guía y extraerla de forma individual: posicionados en Patches se **desencadenará** todas las capas la imagen que se utilizó como guía, y en Z space se **desencadenará** el area_list (Fig. 7).  
+\begin{figure}[h]
+  \centering
+      \includegraphics[width=0.9\textwidth]{img/9AGRANDADA.jpg}
+      \caption{Ambas flechas celestes muestran el lugar donde se deberán desecandernar las capas de la imagen, en dentro de Patches, y dentro de Z space}
+      \label{fig}
+    \end{figure}
+\newpage
+10. Volviendo a Patches se eliminará las imágenes de la guía de selección: posicionados sobre ella CLICK DER **>delete** (en todas capas).  
+\begin{figure}[h]
+  \centering
+      \includegraphics[width=0.6\textwidth]{img/10.jpg}
+      \caption{Esta imagen necesita un pie de figura}
+      \label{fig}
+    \end{figure}
+\newpage
+11. Habrá desaparecido la imagen incial y aparecera el canal de interes con el area segmentada en color. Posicionados en Z space con CLICK DER **>Plugins >Area_list crop > Create > Valou=0** (Fig.8) el programa recortará la imagen segmentada.  
+\begin{figure}[h]
+      \includegraphics[width=1\textwidth]{img/11AGRANDADA.jpg}
+      \caption{Esta imagen necesita un pie de figura}
+      \label{fig}
+    \end{figure}
+\newpage
+12. Aparecerán dos cuadros emergentes, uno con el volumen segmentado en el canal que nos interesa trabajar, y el otro como cuadro de diálogo con información de dicho volumen.  
+\begin{figure}[h]
+      \includegraphics[width=1\textwidth]{img/12AGRANDADA.png}
+      \caption{Cropped AreaList Stack es el volumen segmentado y Log es el cuadro de dialogo con informacion de dicho volumen o stack}
+      \label{fig}
+    \end{figure}
+\newpage
+Luego, sobre esta nueva pila de imagenes puede realizarse el analisis que nos resulte mas conveniente.
+
+# Referencias  
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
