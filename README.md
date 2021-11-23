@@ -1,4 +1,4 @@
 # neuroepitelio
-Estos scrips fueron utlizados en la preparación de mi tesis de grado de Facultad de Veterinaria. 
+Estos scripts fueron utlizados en la preparación de mi tesis de grado de Facultad de Veterinaria. 
 El Manual de segmentacion, fue escrito con el objetivo de hacer una guía para el procesamiento de imágenes obtenidas del microscopio confocal, dado que al momento de hacer dicho paso no encontramos un método que nos explicara como se hacía una segmentación con más de un canal, cuando encontramos la forma, se decidió publicarlo (https://github.com/IIBCE-BND/segmentation).
-El otro scrip, fue escrito con el fin de analizar los resultados de una cuantificación de células proliferantes y de núcleos totales en volúmenes resultantes de una segmentación del neuroepitelio en el lóbulo óptico de Drosophila. A partir de este obtuvimos gráficos, valores estadísticos y el número ideal de muestras a utlizar para nuestro ensayo experimental.
+El otro script, fue escrito con el fin de analizar los resultados de una cuantificación de células proliferantes y de núcleos totales en volúmenes resultantes de una segmentación del neuroepitelio en el lóbulo óptico de Drosophila. A partir de este obtuvimos gráficos, valores estadísticos y el número ideal de muestras a utlizar para nuestro ensayo experimental.
